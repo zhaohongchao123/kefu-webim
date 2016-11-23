@@ -42,8 +42,6 @@
                 this.msgTimeSpan = {};
 				//chat window status
                 this.opened = true;
-				//fill theme
-				this.setTheme();
 				//add min icon
                 this.setMinmum();
 				//init sound reminder
@@ -504,26 +502,6 @@
                     utils.removeClass(this, 'hover-color');
                 });
                 min = null;
-            }
-			, setTheme: function () {
-                var me = this;
-
-				easemobim.api('getTheme', {
-					tenantId: config.tenantId
-				}, function ( msg ) {
-					config.theme = msg.data && msg.data.length && msg.data[0].optionValue ? msg.data[0].optionValue : '天空之城';
-
-					if ( !easemobim.THEME[config.theme] ) {
-						config.theme = '天空之城';
-					}
-
-					var style = document.createElement('style');
-					style.setAttribute('type', 'text/css');
-					utils.html(style, easemobim.THEME[config.theme].css);
-					var head = document.head || document.getElementsByTagName('head')[0];
-					head.appendChild(style);
-				});
-
             }
 			, setLogo: function () {
 				if ( !utils.$Class('div.easemobWidget-tenant-logo').length && config.logo ) {

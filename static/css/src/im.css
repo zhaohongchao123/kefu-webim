@@ -1283,3 +1283,98 @@ object {
 }
 @media 
 (-webkit-min-device-pixel-ratio: 2) {}
+
+/* 奔驰私有部署颜色修改 */
+
+/* pc端 */
+/* 消息窗背景 */
+.easemobWidgetBody-wrapper {
+    background-color: #484848;
+    border-bottom-color: #484848;
+}
+
+/* 坐席消息气泡 */
+.easemobWidget-left .easemobWidget-msg-container {
+    background-color: #eaeaea;
+}
+.easemobWidget-left .easemobWidget-corner{
+    color: #eaeaea;
+}
+
+/* 访客消息气泡 */
+.easemobWidget-right .easemobWidget-msg-container {
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
+}
+.easemobWidget-right .easemobWidget-corner{
+    color: #000;
+    text-shadow: 1px 0 0 #000;
+}
+
+/* 菜单消息 */
+.easemobWidget-msg-menu > p {
+    background-color: #eaeaea;
+}
+.easemobWidget-send-wrapper {
+    box-shadow: 0 -1px 0 #333;
+}
+.easemobWidget-send-wrapper {
+    background-color: #1c1c1c;
+}
+.easemobWidget-face-container {
+    border-radius: 0; 
+}
+.easemobWidget-textarea {
+    color: #b7b7b7;
+    background-color: #1c1c1c;
+}
+
+.easemobWidget-file.theme-color,
+.easemobWidget-note.theme-color,
+.easemobWidget-face.theme-color {
+    color: #999;
+}
+
+/* 移动端 */
+/* 发送消息区 */
+.easemobWidgetWrapper-mobile .easemobWidget-send-wrapper {
+    background-color: #1c1c1c;
+}
+
+/* 文本框 */
+.easemobWidgetWrapper-mobile .easemobWidget-textarea {
+    background-color: #3f3f3f;
+}
+.easemobWidget-face,
+.easemobWidget-file,
+.easemobWidget-note {
+    color: #e5e5e5;
+    position: absolute;
+}
+
+.easemobWidgetWrapper-mobile .easemobWidget-file,
+.easemobWidgetWrapper-mobile .easemobWidget-face {
+    bottom: 12px;
+}
+
+/* 默认主题改为黑色 */
+body .theme-color {
+    color: #000000;
+}
+
+body .bg-color {
+    background-color: #000000
+}
+
+.border-color {
+    border: 1px solid #1a1a1a
+}
+
+.hover-color {
+    background-color: #333333
+}
+
+
+
+
