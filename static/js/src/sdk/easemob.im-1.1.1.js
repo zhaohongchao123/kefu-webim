@@ -1433,7 +1433,7 @@
             }
 
             url = {
-                prefix: 'http',
+                prefix: 'https',
                 base: '://' + (baseUrl || 'im-api.easemob.com'),
                 suffix: '/http-bind/'
             };
