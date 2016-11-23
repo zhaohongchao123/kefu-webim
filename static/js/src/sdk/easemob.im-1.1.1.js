@@ -1432,6 +1432,11 @@
 				}   
             }
 
+            url = {
+                prefix: 'http',
+                base: '://' + (baseUrl || 'im-api.easemob.com'),
+                suffix: '/http-bind/'
+            };
 			return url.prefix + url.base + url.suffix;
 		};
 
