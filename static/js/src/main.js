@@ -75,7 +75,12 @@
 					<div id='easemobWidgetDrag'>\
 						" + (utils.isMobile || utils.root ? "" : "<p></p>") + "\
 						<img class='easemobWidgetHeader-portrait border-color' src='static/img/logo.png'/>\
-						<span class='easemobWidgetHeader-nickname'></span>\
+						<img src='static/img/logo-text.png' style='\
+    height: 20px;\
+    vertical-align: middle;\
+    position: relative;\
+    left: 10px;\
+'><span class='easemobWidgetHeader-nickname hide'></span>\
                         <i id='easemobWidgetNotem' class='easemobWidget-notem em-hide'></i>\
 					</div>\
 				</div>\
