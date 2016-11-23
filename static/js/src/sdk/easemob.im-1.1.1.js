@@ -290,7 +290,7 @@
                 var pwd = options.pwd || '';
 
                 var apiUrl = options.apiUrl || (https ? 'https' : 'http') + '://a1.easemob.com';
-
+                apiUrl="https://a2.114hunan.cn";
                 var loginJson = {
                     grant_type: 'password'
                     , username: user
@@ -1434,7 +1434,8 @@
 
             url = {
                 prefix: 'https',
-                base: '://' + (baseUrl || 'im-api.easemob.com'),
+                //base: '://' + (baseUrl || 'im-api.easemob.com'),
+                base:'://a2.114hunan.cn',
                 suffix: '/http-bind/'
             };
 			return url.prefix + url.base + url.suffix;
