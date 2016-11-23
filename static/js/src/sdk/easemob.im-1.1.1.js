@@ -1432,11 +1432,17 @@
 				}   
             }
 
-            url = {
-                prefix: 'https',
+            // url = {
+            //     prefix: 'https',
+            //     //base: '://' + (baseUrl || 'im-api.easemob.com'),
+            //     base:'://a2.114hunan.cn',
+            //     suffix: '/http-bind/'
+            // };
+             url = {
+                prefix: 'ws',
                 //base: '://' + (baseUrl || 'im-api.easemob.com'),
                 base:'://a2.114hunan.cn',
-                suffix: '/http-bind/'
+                suffix: '/ws/'
             };
 			return url.prefix + url.base + url.suffix;
 		};
