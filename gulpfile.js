@@ -2,7 +2,7 @@
     gulp config
 */
 
-var debug = false;
+var debug = true;
 var version = '43.7';
 
 var gulp = require('gulp'),
