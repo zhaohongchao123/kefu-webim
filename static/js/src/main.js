@@ -74,7 +74,7 @@
 				<div id='easemobWidgetHeader' class='easemobWidgetHeader-wrapper bg-color border-color'>\
 					<div id='easemobWidgetDrag'>\
 						" + (utils.isMobile || utils.root ? "" : "<p></p>") + "\
-						<img class='easemobWidgetHeader-portrait border-color'/>\
+						<img class='easemobWidgetHeader-portrait border-color' src='static/img/logo.png'/>\
 						<span class='easemobWidgetHeader-nickname'></span>\
                         <i id='easemobWidgetNotem' class='easemobWidget-notem em-hide'></i>\
 					</div>\
