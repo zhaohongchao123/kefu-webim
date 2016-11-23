@@ -80,7 +80,7 @@
     vertical-align: middle;\
     position: relative;\
     left: 10px;\
-'><span class='easemobWidgetHeader-nickname hide'></span>\
+'><span class='easemobWidgetHeader-nickname em-hide'></span>\
                         <i id='easemobWidgetNotem' class='easemobWidget-notem em-hide'></i>\
 					</div>\
 				</div>\

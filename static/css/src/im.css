@@ -1331,7 +1331,7 @@ object {
 .easemobWidget-msg-menu > p {
     background-color: #eaeaea;
 }
-.easemobWidget-send-wrapper {
+#EasemobKefuWebim .easemobWidget-send-wrapper {
     box-shadow: 0 -1px 0 #333;
 }
 .easemobWidget-send-wrapper {
@@ -1340,7 +1340,7 @@ object {
 .easemobWidget-face-container {
     border-radius: 0; 
 }
-.easemobWidget-textarea {
+#EasemobKefuWebim .easemobWidget-textarea {
     color: #b7b7b7;
     background-color: #1c1c1c;
 }
@@ -1358,7 +1358,7 @@ object {
 }
 
 /* 文本框 */
-.easemobWidgetWrapper-mobile .easemobWidget-textarea {
+#EasemobKefuWebim .easemobWidgetWrapper-mobile .easemobWidget-textarea {
     background-color: #3f3f3f;
 }
 .easemobWidget-face,
@@ -1373,6 +1373,11 @@ object {
     bottom: 12px;
 }
 
+/* 发送按钮反差不要太剧烈 */
+#easemobWidgetSendBtn.disabled {
+    background-color: black;
+    color: #999;
+}
 /* 默认主题改为黑色 */
 body .theme-color {
     color: #000000;

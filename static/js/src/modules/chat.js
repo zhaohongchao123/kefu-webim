@@ -364,10 +364,10 @@
                     utils.addClass(curChatContainer, 'easemobWidget-chat');
                     utils.insertBefore(easemobim.imChatBody, curChatContainer, easemobim.imChatBody.childNodes[this.hasLogo ? 1 : 0]);
 
-                    var transfer = document.createElement('div');
-                    transfer.id = 'transfer';
-					utils.addClass(transfer, 'easemobWidget-status-prompt');
-                    easemobim.imChat.appendChild(transfer);
+     //                var transfer = document.createElement('div');
+     //                transfer.id = 'transfer';
+					// utils.addClass(transfer, 'easemobWidget-status-prompt ');
+     //                easemobim.imChat.appendChild(transfer);
                     return curChatContainer;
                 }
             }
@@ -405,10 +405,10 @@
 				}
 			}
             , setAgentProfile: function ( info ) {
-                var nickName = utils.$Class('span.easemobWidgetHeader-nickname')[0];
+                // var nickName = utils.$Class('span.easemobWidgetHeader-nickname')[0];
                 // var avatar = utils.$Class('img.easemobWidgetHeader-portrait')[0];
 
-                utils.html(nickName, info && info.userNickname ? info.userNickname : info && info.agentUserNiceName || config.defaultAgentName);
+                // utils.html(nickName, info && info.userNickname ? info.userNickname : info && info.agentUserNiceName || config.defaultAgentName);
 
 				// this.currentAvatar = info && info.avatar ? utils.getAvatarsFullPath(info.avatar, config.domain) : config.tenantAvatar || config.defaultAvatar;
     //             if ( avatar.getAttribute('src') !== this.currentAvatar ) {
@@ -990,7 +990,7 @@
                     return;
                 }
 
-                var wrap = utils.$Dom('transfer');
+                // var wrap = utils.$Dom('transfer');
 
                 config.agentList = config.agentList || {};
                 config.agentList[config.toUser] = config.agentList[config.toUser] || {};
@@ -1029,8 +1029,8 @@
                         });
                     }
 					if ( utils.isMobile ) {
-						utils.removeClass(easemobim.dragHeader.getElementsByTagName('img')[0], 'em-hide');
-						utils.removeClass(easemobim.dragHeader.getElementsByTagName('span')[0], 'em-hide');
+						// utils.removeClass(easemobim.dragHeader.getElementsByTagName('img')[0], 'em-hide');
+						// utils.removeClass(easemobim.dragHeader.getElementsByTagName('span')[0], 'em-hide');
 					}
                 }
             }
