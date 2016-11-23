@@ -464,21 +464,22 @@
 				}
 			}
             , setAgentProfile: function ( info ) {
-                var nickName = utils.$Class('span.easemobWidgetHeader-nickname')[0],
-                    avatar = utils.$Class('img.easemobWidgetHeader-portrait')[0];
+                var nickName = utils.$Class('span.easemobWidgetHeader-nickname')[0];
+                // var avatar = utils.$Class('img.easemobWidgetHeader-portrait')[0];
 
                 utils.html(nickName, info && info.userNickname ? info.userNickname : info && info.agentUserNiceName || config.defaultAgentName);
 
-				this.currentAvatar = info && info.avatar ? utils.getAvatarsFullPath(info.avatar, config.domain) : config.tenantAvatar || config.defaultAvatar;
-                if ( avatar.getAttribute('src') !== this.currentAvatar ) {
-                    var cur = this.currentAvatar;
+				// this.currentAvatar = info && info.avatar ? utils.getAvatarsFullPath(info.avatar, config.domain) : config.tenantAvatar || config.defaultAvatar;
+    //             if ( avatar.getAttribute('src') !== this.currentAvatar ) {
+    //                 var cur = this.currentAvatar;
 
-                    avatar.onload = function () {
-                        avatar.style.opacity = '1';
-                    };
-					avatar.style.opacity = '0';
-					avatar.setAttribute('src', cur);
-                }
+    //                 if ( !cur ) { return; }
+    //                 avatar.onload = function () {
+    //                     avatar.style.opacity = '1';
+    //                 };
+				// 	avatar.style.opacity = '0';
+				// 	avatar.setAttribute('src', cur);
+    //             }
             }
             , setMinmum: function () {
                 if ( !config.minimum || utils.root ) {
