@@ -83,7 +83,8 @@ gulp.task('uglify', function() {
         'static/js/src/modules/autogrow.js',
         'static/js/src/modules/message.js',
         'static/js/src/modules/paste.js',
-        'static/js/src/modules/leaveMessage.js',
+        // for demo block leaveMessage
+        // 'static/js/src/modules/leaveMessage.js',
         'static/js/src/modules/satisfaction.js',
 		'static/js/src/modules/imgView.js',
 		'static/js/src/modules/uploadShim.js',

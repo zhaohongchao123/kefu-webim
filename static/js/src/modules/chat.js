@@ -20,8 +20,8 @@
 		easemobim.faceBtn = easemobim.send.getElementsByTagName('i')[0],
 		easemobim.realFile = utils.$Dom('easemobWidgetFileInput'),
 		easemobim.sendFileBtn = utils.$Dom('easemobWidgetFile'),
-		easemobim.noteBtn = utils.$Dom('easemobWidgetNote'),
-		easemobim.mobileNoteBtn = utils.$Dom('easemobWidgetNotem'),
+		// easemobim.noteBtn = utils.$Dom('easemobWidgetNote'),
+		// easemobim.mobileNoteBtn = utils.$Dom('easemobWidgetNotem'),
 		easemobim.dragHeader = utils.$Dom('easemobWidgetDrag'),
 		easemobim.dragBar = easemobim.dragHeader.getElementsByTagName('p')[0],
 		easemobim.chatFaceWrapper = utils.$Dom('EasemobKefuWebimFaceWrapper'),
@@ -124,7 +124,7 @@
 				//mobile need set drag disable
 				config.dragenable = false;
 
-                config.ticket && utils.removeClass(easemobim.mobileNoteBtn, 'em-hide');
+                // config.ticket && utils.removeClass(easemobim.mobileNoteBtn, 'em-hide');
 
 				if ( !config.hideKeyboard ) {
 					var i = document.createElement('i');
@@ -832,12 +832,12 @@
                 utils.on(easemobim.sendFileBtn, 'mouseleave', function () {
                     me.clearThemeColor(this);
                 });
-                utils.on(easemobim.noteBtn, 'mouseenter', function () {
-                    me.setThemeColor(this);
-                });
-                utils.on(easemobim.noteBtn, 'mouseleave', function () {
-                    me.clearThemeColor(this);
-                });
+                // utils.on(easemobim.noteBtn, 'mouseenter', function () {
+                //     me.setThemeColor(this);
+                // });
+                // utils.on(easemobim.noteBtn, 'mouseleave', function () {
+                //     me.clearThemeColor(this);
+                // });
 
 				if ( config.dragenable ) {//drag
 					
@@ -994,12 +994,12 @@
                 });
 
                 //显示留言界面
-                utils.on(easemobim.noteBtn, 'click', function () {
-                    easemobim.leaveMessage.show();
-                });
-                utils.on(easemobim.mobileNoteBtn, 'click', function () {
-                    easemobim.leaveMessage.show();
-                });
+                // utils.on(easemobim.noteBtn, 'click', function () {
+                //     easemobim.leaveMessage.show();
+                // });
+                // utils.on(easemobim.mobileNoteBtn, 'click', function () {
+                //     easemobim.leaveMessage.show();
+                // });
 
                 //hot key
                 utils.on(easemobim.textarea, 'keydown', function ( evt ) {
