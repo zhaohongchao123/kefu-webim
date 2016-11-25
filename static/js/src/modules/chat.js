@@ -68,13 +68,13 @@
                     //get visitor
                     var visInfo = config.visitor;
                     if ( !visInfo ) {
-                        visInfo = utils.getStore(config.tenantId + config.emgroup + 'visitor');
+                        visInfo = utils.getStore(config.tenantId + config.emgroup + 'visitor') || config.visitor;
                         try { config.visitor = Easemob.im.Utils.parseJSON(visInfo); } catch ( e ) {}
                         utils.clearStore(config.tenantId + config.emgroup + 'visitor');
                     }
 
                     //get ext
-                    var ext = utils.getStore(config.tenantId + config.emgroup + 'ext');
+                    var ext = utils.getStore(config.tenantId + config.emgroup + 'ext') || config.ext;
                     try { ext && me.sendTextMsg('', false, {ext: Easemob.im.Utils.parseJSON(ext)}); } catch ( e ) {}
                     utils.clearStore(config.tenantId + config.emgroup + 'ext');
                 } else {

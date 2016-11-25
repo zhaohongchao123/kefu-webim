@@ -263,8 +263,8 @@
 		typeof this.config.originType !== 'undefined' && this.config.originType !== '' && (destUrl.originType = this.config.originType);
 		this.config.agentName && (destUrl.agentName = this.config.agentName);
 
-
-		this.url = easemobim.utils.updateAttribute(this.url, destUrl, config.path);
+		// benz patch
+		this.url = easemobim.utils.updateAttribute(this.ur, destUrl, config.path, config.h5Origin);
 
 
 		if ( !this.config.user.username ) {
