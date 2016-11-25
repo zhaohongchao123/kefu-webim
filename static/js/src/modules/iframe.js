@@ -264,7 +264,12 @@
 		this.config.agentName && (destUrl.agentName = this.config.agentName);
 
 		// benz patch
-		this.url = easemobim.utils.updateAttribute(this.ur, destUrl, config.path, config.h5Origin);
+		if(config.h5Origin){
+			this.url = easemobim.utils.updateAttribute(this.ur, destUrl, config.path.replace(config.domain, config.h5Origin));
+		}
+		else {
+			this.url = easemobim.utils.updateAttribute(this.ur, destUrl, config.path);
+		}
 
 
 		if ( !this.config.user.username ) {

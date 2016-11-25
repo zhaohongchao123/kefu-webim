@@ -425,10 +425,6 @@
 		, updateAttribute: function ( link, attr, path , h5Origin) {
 			var url = link || _protocol + path + '/im.html?tenantId=';
 
-// benz patch
-			if(h5Origin){
-				url = _protocol + h5Origin + '/webim/im.html?tenantId='
-			}
 			for ( var o in attr ) {
 				if ( attr.hasOwnProperty(o) && typeof attr[o] !== 'undefined' ) {
 					if ( url.indexOf(o + '=') < 0 ) {
