@@ -1148,56 +1148,6 @@
                 }
             }
             , handleTransfer: function ( action, info, robertToHubman ) {
-                if ( config.hideStatus ) { return; }
-                var wrap = utils.$Dom(config.toUser + '-transfer');
-
-                config.agentList = config.agentList || {};
-                config.agentList[config.toUser] = config.agentList[config.toUser] || {};
-
-                var res = robertToHubman ? this.onlineHumanAgentCount < 1 : (!this.session && this.agentCount < 1);
-				if ( res ) {
-					utils.addClass(wrap, 'none');
-					utils.removeClass(wrap, 'transfer');
-					utils.removeClass(wrap, 'link');
-					utils.removeClass(wrap, 'em-hide');
-					this.handleMobileHeader();
-				} else if ( action === 'sending' ) {
-					if ( config.offDuty || this.session || config.agentName ) { return; }
-
-                    if ( !config.agentList[config.toUser].firstMsg && !this.chatWrapper.getAttribute('data-session') ) {
-                        config.agentList[config.toUser].firstMsg = true;
-						utils.addClass(wrap, 'link');
-						utils.removeClass(wrap, 'transfer');
-						utils.removeClass(wrap, 'none');
-                        utils.removeClass(wrap, 'em-hide');
-                    }
-					this.handleMobileHeader();
-                } else if ( action === 'transfer' ) {
-                    utils.addClass(wrap, 'transfer');
-                    utils.removeClass(wrap, 'link');
-                    utils.removeClass(wrap, 'none');
-                    utils.removeClass(wrap, 'em-hide');
-					this.handleMobileHeader();
-                } else if ( action === 'reply' ) {
-                    utils.addClass(wrap, 'em-hide');
-
-                    if ( info && info.userNickname ) {
-                        this.setAgentProfile({
-                            userNickname: info.userNickname,
-                            avatar: info.avatar
-                        });
-                    }
-					if ( utils.isMobile ) {
-						utils.removeClass(easemobim.dragHeader.getElementsByTagName('img')[0], 'em-hide');
-						utils.removeClass(easemobim.dragHeader.getElementsByTagName('span')[0], 'em-hide');
-					}
-                }
-            }
-			, handleMobileHeader: function () {
-				if ( utils.isMobile ) {
-					utils.addClass(easemobim.dragHeader.getElementsByTagName('img')[0], 'em-hide');
-					utils.addClass(easemobim.dragHeader.getElementsByTagName('span')[0], 'em-hide');
-				}
 			}
 			//消息上屏
             , appendMsg: function ( from, to, msg, isHistory ) {
