@@ -41,7 +41,7 @@
             config.wechatAuth = utils.convertFalse(utils.query('wechatAuth'));
             config.hideKeyboard = utils.convertFalse(utils.query('hideKeyboard'));
             // benz patch
-            var ext = JSON.parse(decodeURIComponent(utils.code.decode(utils.query('ext'))) || '{}');
+            var ext = JSON.parse(decodeURIComponent(utils.code.decode(utils.query('ext') || '')) || '{}');
             config.visitor = ext.visitor;
             config.ext = ext.ext;
             config.ticket = utils.query('ticket') === '' ? true : utils.convertFalse(utils.query('ticket'));//true default
