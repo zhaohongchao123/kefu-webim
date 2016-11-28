@@ -65,18 +65,8 @@
                 easemobim.leaveMessage && easemobim.leaveMessage.auth(me.token, config);
 
                 if ( utils.root ) {
-                    //get visitor
-                    var visInfo = config.visitor;
-                    if ( !visInfo ) {
-                        visInfo = utils.getStore(config.tenantId + config.emgroup + 'visitor') || config.visitor;
-                        try { config.visitor = Easemob.im.Utils.parseJSON(visInfo); } catch ( e ) {}
-                        utils.clearStore(config.tenantId + config.emgroup + 'visitor');
-                    }
-
                     //get ext
-                    var ext = utils.getStore(config.tenantId + config.emgroup + 'ext') || config.ext;
-                    try { ext && me.sendTextMsg('', false, {ext: Easemob.im.Utils.parseJSON(ext)}); } catch ( e ) {}
-                    utils.clearStore(config.tenantId + config.emgroup + 'ext');
+                    config.ext && me.sendTextMsg('', false, {ext: config.ext});
                 } else {
                     transfer.send(easemobim.EVENTS.ONREADY);
                 } 
