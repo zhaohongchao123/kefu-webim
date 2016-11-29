@@ -66,7 +66,16 @@
 
                 if ( utils.root ) {
                     //get ext
-                    config.ext && me.sendTextMsg('', false, {ext: config.ext});
+                    if(config.ext){
+                    	if(utils.isArray(config.ext)){
+                    		for(var i = 0, l = config.ext.length; i < l; i++){
+                    			me.sendTextMsg('', false, {ext: config.ext[i]});
+                    		}
+                    	}
+                    	else{
+                    		me.sendTextMsg('', false, {ext: config.ext});
+                    	}
+                    }
                 } else {
                     transfer.send(easemobim.EVENTS.ONREADY);
                 } 

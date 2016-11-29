@@ -36,7 +36,10 @@
 			'[object HTMLCollection]': 1,
 			'[object Array]': 1
 		}
-		, convertFalse: function ( obj ) {
+		, isArray: Array.isArray || function(obj) {
+			return toString.call(obj) === '[object Array]';
+		}
+  		, convertFalse: function ( obj ) {
 			obj = typeof obj === 'undefined' ? '' : obj;
 			return obj === 'false' ? false : obj;
 		}
