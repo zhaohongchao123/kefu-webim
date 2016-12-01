@@ -18,7 +18,7 @@
 		path: '',
 		ticket: true,
 		staticPath: '',
-		buttonText: '联系客服',
+		buttonText: '联系奔驰',
 		dialogWidth: '360px',
 		dialogHeight: '550px',
 		dragenable: true,

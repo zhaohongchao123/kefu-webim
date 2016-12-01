@@ -1,0 +1,146 @@
+/* 奔驰私有部署颜色修改 */
+
+/*
+	主题颜色说明
+
+	className	   描述						  颜色值
+	fg-color		文字颜色						主题色
+	fg-hover-color  hover时文字颜色				  主题色
+	bg-color		背景颜色						主题色
+	bg-color		hover时背景颜色				  主题色
+	boder-color	 边线颜色						比主题色稍暗
+	hover-color	 hover时背景颜色（稍亮一些）		比主题色稍亮
+*/
+
+/* 修改主题颜色 */
+body {
+	.fg-color,
+	.fg-hover-color:hover {
+		color:#000000
+	}
+	.bg-color,
+	.bg-hover-color:hover { background-color:#000000 }
+	.border-color { border-color: #1a1a1a }
+	.hover-color:hover { background-color:#333333 }
+}
+
+// pc端
+
+.benz-nav {
+	height: 43px;
+	width: 150px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+// 消息窗背景
+.em-widgetBody-wrapper {
+	background-color: #484848;
+	border-bottom-color: #484848;
+}
+
+// 坐席消息气泡
+.em-widget-left .em-widget-msg-container {
+	border-radius: 0;
+	background-color: white;
+	.icon-file,
+	.icon-file-download {
+		color: #484848;
+		background-color: initial;
+	}
+}
+.icon-corner-left {
+	left: -15px;
+	color: white;
+}
+
+// 访客消息气泡
+.em-widget-right .em-widget-msg-container {
+	border-radius: 0;
+	color: #fff;
+	background-color: #000;
+	border-color: #000;
+}
+.icon-corner-right {
+	color: #000;
+	text-shadow: 1px 0 0 #000;
+}
+
+// 菜单消息
+.em-widget-msg-menu > p {
+	background-color: #eaeaea;
+}
+
+// 
+.em-widget-send-wrapper {
+	box-shadow: 0 -1px 0 #333;
+	background-color: #666666;
+	// 工具栏图标
+	> i {
+		color: white;
+	}
+}
+.em-widget-textarea {
+	color: #b7b7b7;
+	background-color: #666666;
+}
+
+// 发送按钮
+#em-widgetSendBtn {
+	border-radius: 0;
+	&.disabled {
+	    background-color: black;
+	    color: #999;
+	}
+}
+
+// 联系客服按钮
+.em-widget-pop-bar {
+	border-radius: 0;
+}
+
+// 信息栏
+.em-widget-tip {
+	background-color: #666666;
+	span {
+		color: white;
+		a {
+			color: #3399d0;
+		}
+	}
+}
+
+// 表情容器
+.em-bar-face-wrapper,
+.em-bar-face-container {
+	border-radius: 0;
+	background-color: #777777;
+}
+
+
+/* 移动端 */
+
+.em-mobile {
+
+	/* 发送消息区 */
+	.em-widget-send-wrapper {
+		box-shadow: 0 -1px 0 #333;
+		background-color: #1c1c1c;
+
+		// 工具栏图标
+		> i {
+			color: #e5e5e5;
+			bottom: 12px;
+		}
+	}
+
+	/* 文本框 */
+	.em-widget-textarea {
+		color: #b7b7b7;
+		background-color: #3f3f3f;
+	}
+
+}
+
+
+

@@ -54,8 +54,6 @@
 				this.msgTimeSpan = {};
 				//chat window status
 				this.opened = true;
-				//fill theme
-				this.setTheme();
 				//init sound reminder
 				this.soundReminder();
 				//init face
@@ -369,10 +367,6 @@
 			, handleChatContainer: function () {
 				var curChatContainer = utils.$Class('div.em-widget-chat', easemobim.imChatBody);
 
-				this.setAgentProfile({
-					tenantName: config.defaultAgentName,
-					avatar: config.tenantAvatar
-				});
 				if ( curChatContainer && curChatContainer.length > 0 ) {
 					return curChatContainer[0];
 				} else {
@@ -397,17 +391,8 @@
 				return null;
 			}
 			, startToGetAgentStatus: function () {
-				var me = this;
-
-				if ( config.agentStatusTimer ) return;
-
-				// start to poll
-				config.agentStatusTimer = setInterval(function() {
-					me.updateAgentStatus();
-				}, 5000);
 			}
 			, stopGettingAgentStatus: function () {
-				config.agentStatusTimer = clearInterval(config.agentStatusTimer);
 			}
 			, clearAgentStatus: function () {
 				doms.agentStatusSymbol.className = 'em-hide';
@@ -437,47 +422,6 @@
 						doms.agentStatusText.innerText = _const.agentStatusText[state];
 						doms.agentStatusSymbol.className = 'em-widget-agent-status ' + _const.agentStatusClassName[state];
 					}
-				});
-			}
-			, setAgentProfile: function ( info ) {
-
-				var avatarImg = info && info.avatar ? utils.getAvatarsFullPath(info.avatar, config.domain) : config.tenantAvatar || config.defaultAvatar;
-
-				//更新企业头像和名称
-				if ( info.tenantName ) {
-					doms.nickName.innerText = info.tenantName;
-					easemobim.avatar.setAttribute('src', avatarImg);
-				}
-
-				//昵称开关关闭
-				if (!config.nickNameOption) return;
-
-				// fake: 默认不显示调度员昵称
-				if('调度员' === info.userNickname) return;
-
-				if(!info.userNickname) return;
-
-				//更新坐席昵称
-				doms.nickName.innerText = info.userNickname;
-
-				this.currentAvatar = avatarImg;
-				var src = easemobim.avatar.getAttribute('src');
-
-				if ( !this.currentAvatar ) { return; }
-				easemobim.avatar.setAttribute('src', this.currentAvatar);
-
-				//更新头像显示状态
-				//只有头像和昵称更新成客服的了才开启轮训
-				//this.updateAgentStatus();
-			}
-			, setTheme: function () {
-				easemobim.api('getTheme', {
-					tenantId: config.tenantId
-				}, function ( msg ) {
-					var themeName = msg.data && msg.data.length && msg.data[0].optionValue;
-					var className = _const.themeMap[themeName];
-
-					className && utils.addClass(document.body, className);
 				});
 			}
 			, setLogo: function () {
@@ -1015,10 +959,6 @@
 						this.startToGetAgentStatus();
 					}
 
-					this.setAgentProfile({
-						userNickname: info.userNickname,
-						avatar: info.avatar
-					});
 				} else if ( action === 'create' ) {//显示会话创建
 					this.appendEventMsg(_const.eventMessageText.CREATE);
 				} else if ( action === 'close' ) {//显示会话关闭
@@ -1042,14 +982,9 @@
 
 				config.agentUserId = info.userId;
 
-				this.updateAgentStatus();
+				// this.updateAgentStatus();
 				this.startToGetAgentStatus();
 
-				//更新头像和昵称
-				this.setAgentProfile({
-					userNickname: info.agentUserNiceName,
-					avatar: info.avatar
-				});
 			}
 			//转接中排队中等提示上屏
 			, appendEventMsg: function (msg) {

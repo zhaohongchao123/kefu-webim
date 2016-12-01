@@ -1,16 +1,6 @@
-/*
-
-	以下文件老版本会引用到，不能删除
-
-	/static/js/em-open.js
-	/static/js/em-transfer.js
-	/transfer.html
-	/static/img/file_download.png
-
-*/
 
 var debug = false;
-const VERSION = '43.11.1';
+const VERSION = 'benz.43.11.1';
 
 const gulp = require('gulp');
 const postcss = require('gulp-postcss');
@@ -60,6 +50,7 @@ gulp.task('cssmin', function() {
 		'static/css/src/theme.scss',
 		'static/css/src/ui.scss',
 		'static/css/src/mobile.scss',
+		'static/css/src/benz.scss',
 	])
 	.pipe(concat('im.css'))
 	.pipe(template({ WEBIM_PLUGIN_VERSION: VERSION }))
