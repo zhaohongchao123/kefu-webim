@@ -29,6 +29,20 @@
 			|| window.mozRTCPeerConnection
 			|| window.RTCPeerConnection
 		)
+		, filesizeFormat: function(filesize){
+			var UNIT_ARRAY = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB'];
+			var exponent;
+			var result;
+
+			if(filesize){
+				exponent = Math.floor(Math.log(filesize) / Math.log(1024));
+				result = (filesize / Math.pow(1024, exponent)).toFixed(2) + ' ' + UNIT_ARRAY[exponent];
+			}
+			else{
+				result = '0 B';
+			}
+			return result;
+		}
 		, uuid: function () {
 			var s = [], hexDigits = '0123456789abcdef';
 
@@ -1160,7 +1174,7 @@ easemobim.titleSlide = function () {
 	'use strict';
 	var utils = easemobim.utils;
 	easemobim.config = easemobim.config || {};
-	easemobim.version = '43.11';
+	easemobim.version = 'benz.43.11.1';
 	easemobim.tenants = {};
 
 	var DEFAULT_CONFIG = {
@@ -1172,7 +1186,7 @@ easemobim.titleSlide = function () {
 		path: '',
 		ticket: true,
 		staticPath: '',
-		buttonText: '联系客服',
+		buttonText: '联系奔驰',
 		dialogWidth: '360px',
 		dialogHeight: '550px',
 		dragenable: true,
