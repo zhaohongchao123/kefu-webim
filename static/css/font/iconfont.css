@@ -1,10 +1,10 @@
 
 @font-face {font-family: "Benz";
-  src: url('iconfont.eot?t=1480661007720'); /* IE9*/
-  src: url('iconfont.eot?t=1480661007720#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1480661007720') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1480661007720') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1480661007720#Benz') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1480937058891'); /* IE9*/
+  src: url('iconfont.eot?t=1480937058891#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1480937058891') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1480937058891') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1480937058891#Benz') format('svg'); /* iOS 4.1- */
 }
 
 .Benz {
@@ -34,6 +34,8 @@
 
 .Benz-E:before { content: "\45"; }
 
+.Benz-dd:before { content: "\64"; }
+
 .Benz-T:before { content: "\54"; }
 
 .Benz-G:before { content: "\47"; }
@@ -54,6 +56,8 @@
 
 .Benz-P:before { content: "\50"; }
 
+.Benz-zz:before { content: "\7a"; }
+
 .Benz-K:before { content: "\4b"; }
 
 .Benz-B:before { content: "\42"; }
@@ -69,6 +73,8 @@
 .Benz-bb:before { content: "\62"; }
 
 .Benz-O:before { content: "\4f"; }
+
+.Benz-yy:before { content: "\79"; }
 
 .Benz-H:before { content: "\48"; }
 

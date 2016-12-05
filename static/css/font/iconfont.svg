@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Fri Dec  2 14:43:27 2016
+Created by FontForge 20120731 at Mon Dec  5 19:24:18 2016
  By admin
 </metadata>
 <defs>
@@ -15,12 +15,12 @@ Created by FontForge 20120731 at Fri Dec  2 14:43:27 2016
     panose-1="2 0 6 3 0 0 0 0 0 0"
     ascent="896"
     descent="-128"
-    x-height="792"
+    x-height="668"
     cap-height="758"
     bbox="18 -109 1149 877"
     underline-thickness="0"
     underline-position="0"
-    unicode-range="U+0041-0078"
+    unicode-range="U+0041-007A"
   />
 <missing-glyph 
  />
@@ -61,6 +61,8 @@ q-40 -40 -91 -66q-49 -24 -102 -33q-14 -2 -45 -2.5t-46 1.5v0zM722 340l-76 67l27 2
 t46.5 -3q155 -23 240 -153q43 -65 52 -146q2 -18 2.5 -18.5t42 2t42 2t-67 -76t-68.5 -75.5t-77 68v0z" />
     <glyph glyph-name="E" unicode="E" 
 d="M883 697l-58 58l-318 -318l-308 308l-58 -58l308 -308l-298 -298l58 -58l298 298l308 -308l58 58l-308 308z" />
+    <glyph glyph-name="dd" unicode="d" 
+d="M699 640v-178h-317v-158h317v-178l257 257zM541 621v159h-477v-793h477v158h-318v476h318zM541 621z" />
     <glyph glyph-name="T" unicode="T" 
 d="M576 437h-433v-105h738v105h-305z" />
     <glyph glyph-name="G" unicode="G" 
@@ -84,6 +86,8 @@ d="M416 725h192q92 0 170.5 -45.5t124.5 -124.5t46 -171t-46 -171t-124.5 -124.5t-17
 d="M284 521v-274h182l228 -227v728l-228 -227h-182z" />
     <glyph glyph-name="P" unicode="P" 
 d="M65 373l94 78l216 -165q10 12 28.5 32t77 79t119.5 113.5t150 124t173 122.5l36 -44q-14 -12 -38 -35t-93 -97t-131 -151.5t-135.5 -192.5t-122.5 -226z" />
+    <glyph glyph-name="zz" unicode="z" 
+d="M327 235l185 -185v649l-185 -186h-139v-278h139zM585 228l-45 45l248 248l45 -45zM540 476l45 45l248 -248l-45 -45z" />
     <glyph glyph-name="K" unicode="K" 
 d="M785 -30l-276 133l-278 -129l44 298l-211 219l303 51l147 264l144 -266l302 -56l-214 -216z" />
     <glyph glyph-name="B" unicode="B" 
@@ -107,6 +111,8 @@ M565 437q0 -22 -15.5 -37.5t-37.5 -15.5t-37.5 15.5t-15.5 37.5v316q0 22 15.5 37.5t
     <glyph glyph-name="O" unicode="O" 
 d="M962 191v386q0 9 -3 13v0v3l-3 3l-4 3q-1 0 -2.5 2t-3.5 2t-3.5 1.5t-2.5 1.5h-7h-3h-3q-7 0 -10 -3h-3h-3l-206 -103v141q0 15 -9 23.5t-23 8.5h-579q-14 0 -23 -8.5t-9 -23.5v-514q0 -15 9 -23.5t23 -8.5h579q14 0 23 8.5t9 23.5v141l209 -103h3h3q7 0 10 -3h3h3h7
 q1 0 3 1.5t3.5 1.5t3 2t3.5 2l3 3l3 3v3v0v13v0zM641 448v-6v-119v-6v-161h-515v453h515v-161zM705 429l193 96v-282l-193 96v90z" />
+    <glyph glyph-name="yy" unicode="y" 
+d="M512 668q-118 0 -201 -83t-83 -201t83 -201t201 -83t201 83t83 201t-83 201t-201 83v0zM538 228h-51v62h51v-62zM546 460l-11 -145h-46l-11 145v80h68v-80z" />
     <glyph glyph-name="H" unicode="H" 
 d="M913 515h-802q-20 0 -32.5 -17t-10.5 -41l64 -384q2 -17 15 -29t30 -12h670q17 0 30 12t15 29l64 384q2 24 -10.5 41t-32.5 17zM826 653h-385l-64 83h-177q-21 0 -35 -14t-14 -34v-71h722q-4 16 -17 26t-30 10zM917 537l2 21h-814l2 -21h810zM900 576l3 22h-782l3 -22
 h776z" />
