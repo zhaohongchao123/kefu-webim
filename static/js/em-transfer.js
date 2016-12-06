@@ -367,7 +367,7 @@ easemobIM.Transfer = easemobim.Transfer = (function () {
 				break;
 			case 'deleteEvent':
 				easemobim.emajax(createObject({
-					url: '/v1/event_collector/events/' + encodeURIComponent(msg.data.userId),
+					url: '/v1/event_collector/event/' + encodeURIComponent(msg.data.userId),
 					msg: msg,
 					type: 'DELETE',
 					excludeData: true
