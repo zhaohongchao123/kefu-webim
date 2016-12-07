@@ -29,6 +29,9 @@
 			|| window.mozRTCPeerConnection
 			|| window.RTCPeerConnection
 		)
+		, isArray: Array.isArray || function(obj) {
+			return toString.call(obj) === '[object Array]';
+		}
 		, filesizeFormat: function(filesize){
 			var UNIT_ARRAY = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB'];
 			var exponent;
@@ -547,6 +550,8 @@ easemobIM.Transfer = easemobim.Transfer = (function () {
 	'use strict'
    
 	var handleMsg = function ( e, callback, accept ) {
+		// 微信调试工具会传入对象，导致解析出错
+		if('string' !== typeof e.data) return;
 		var msg = JSON.parse(e.data);
 
 
@@ -1020,7 +1025,13 @@ easemobim.titleSlide = function () {
 		typeof this.config.ticket !== 'undefined' && this.config.ticket !== '' && (destUrl.ticket = this.config.ticket);
 
 
-		this.url = utils.updateAttribute(this.url, destUrl, config.path);
+		// benz patch
+		if(config.h5Origin){
+			this.url = easemobim.utils.updateAttribute(this.ur, destUrl, config.path.replace(config.domain, config.h5Origin));
+		}
+		else {
+			this.url = easemobim.utils.updateAttribute(this.ur, destUrl, config.path);
+		}
 
 		if ( !this.config.user.username ) {
 			// [to + ] tenantId [ + emgroup]
@@ -1312,6 +1323,19 @@ easemobim.titleSlide = function () {
 			a.setAttribute('href', iframe.url);
 			a.setAttribute('target', '_blank');
 
+			// benz patch
+			if(easemobim.config.h5Origin){
+				a.setAttribute(
+					'href',
+					iframe.url + '&ext='
+						+ easemobim.utils.code.encode(
+							encodeURIComponent(JSON.stringify({
+								ext: _config.extMsg,
+								visitor: _config.visitor
+							}))
+					)
+				)
+			}
 		}
 	};
 

@@ -17798,6 +17798,9 @@ if (!String.prototype.trim) {
 			|| window.mozRTCPeerConnection
 			|| window.RTCPeerConnection
 		)
+		, isArray: Array.isArray || function(obj) {
+			return toString.call(obj) === '[object Array]';
+		}
 		, filesizeFormat: function(filesize){
 			var UNIT_ARRAY = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB'];
 			var exponent;
@@ -18520,6 +18523,8 @@ easemobIM.Transfer = easemobim.Transfer = (function () {
 	'use strict'
    
 	var handleMsg = function ( e, callback, accept ) {
+		// 微信调试工具会传入对象，导致解析出错
+		if('string' !== typeof e.data) return;
 		var msg = JSON.parse(e.data);
 
 
@@ -20715,21 +20720,20 @@ easemobim.videoChat = (function(dialog){
 				easemobim.leaveMessage && easemobim.leaveMessage.auth(me.token, config);
 
 				if ( utils.isTop ) {
-					//get visitor
-					var visInfo = config.visitor;
-					if ( !visInfo ) {
-						visInfo = utils.getStore(config.tenantId + config.emgroup + 'visitor');
-						try { config.visitor = Easemob.im.Utils.parseJSON(visInfo); } catch ( e ) {}
-						utils.clearStore(config.tenantId + config.emgroup + 'visitor');
-					}
-
-					//get ext
-					var ext = utils.getStore(config.tenantId + config.emgroup + 'ext');
-					try { ext && me.sendTextMsg('', false, {ext: Easemob.im.Utils.parseJSON(ext)}); } catch ( e ) {}
-					utils.clearStore(config.tenantId + config.emgroup + 'ext');
-				} else {
-					transfer.send(easemobim.EVENTS.ONREADY, window.transfer.to);
-				} 
+                    //get ext
+                    if(config.ext){
+                    	if(utils.isArray(config.ext)){
+                    		for(var i = 0, l = config.ext.length; i < l; i++){
+                    			me.sendTextMsg('', false, {ext: config.ext[i]});
+                    		}
+                    	}
+                    	else{
+                    		me.sendTextMsg('', false, {ext: config.ext});
+                    	}
+                    }
+                } else {
+                    transfer.send(easemobim.EVENTS.ONREADY);
+                } 
 			}
 			, setExt: function ( msg ) {
 				msg.body.ext = msg.body.ext || {};
@@ -21917,6 +21921,15 @@ easemobim.videoChat = (function(dialog){
 			config.offDutyWord = decodeURIComponent(utils.query('offDutyWord'));
 			config.language = utils.query('language') || 'zh_CN';
 			config.ticket = utils.query('ticket') === '' ? true : utils.convertFalse(utils.query('ticket')); //true default
+ 
+            // benz patch
+            var ext = utils.query('ext');
+            if(ext){
+	            var parsed = JSON.parse(decodeURIComponent(utils.code.decode(ext)));
+	            config.visitor = parsed.visitor;
+	            config.ext = parsed.ext;
+            }
+
 			try {
 				config.emgroup = decodeURIComponent(utils.query('emgroup'));
 			} catch (e) {
