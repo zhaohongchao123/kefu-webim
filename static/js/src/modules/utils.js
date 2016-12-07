@@ -29,6 +29,9 @@
 			|| window.mozRTCPeerConnection
 			|| window.RTCPeerConnection
 		)
+		, isArray: Array.isArray || function(obj) {
+			return toString.call(obj) === '[object Array]';
+		}
 		, filesizeFormat: function(filesize){
 			var UNIT_ARRAY = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB'];
 			var exponent;

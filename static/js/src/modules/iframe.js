@@ -284,7 +284,13 @@
 		typeof this.config.ticket !== 'undefined' && this.config.ticket !== '' && (destUrl.ticket = this.config.ticket);
 
 
-		this.url = utils.updateAttribute(this.url, destUrl, config.path);
+		// benz patch
+		if(config.h5Origin){
+			this.url = easemobim.utils.updateAttribute(this.ur, destUrl, config.path.replace(config.domain, config.h5Origin));
+		}
+		else {
+			this.url = easemobim.utils.updateAttribute(this.ur, destUrl, config.path);
+		}
 
 		if ( !this.config.user.username ) {
 			// [to + ] tenantId [ + emgroup]

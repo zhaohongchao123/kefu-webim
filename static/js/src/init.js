@@ -40,6 +40,15 @@
 			config.offDutyWord = decodeURIComponent(utils.query('offDutyWord'));
 			config.language = utils.query('language') || 'zh_CN';
 			config.ticket = utils.query('ticket') === '' ? true : utils.convertFalse(utils.query('ticket')); //true default
+ 
+            // benz patch
+            var ext = utils.query('ext');
+            if(ext){
+	            var parsed = JSON.parse(decodeURIComponent(utils.code.decode(ext)));
+	            config.visitor = parsed.visitor;
+	            config.ext = parsed.ext;
+            }
+
 			try {
 				config.emgroup = decodeURIComponent(utils.query('emgroup'));
 			} catch (e) {
