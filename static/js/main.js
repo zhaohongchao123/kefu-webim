@@ -9296,14 +9296,6 @@ WebIM.config = {
 
 	window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 
-	if (window.XDomainRequest) {
-	    XDomainRequest.prototype.oldsend = XDomainRequest.prototype.send;
-	    XDomainRequest.prototype.send = function () {
-	        XDomainRequest.prototype.oldsend.apply(this, arguments);
-	        this.readyState = 2;
-	    };
-	}
-
 	Strophe.Request.prototype._newXHR = function () {
 	    var xhr = _utils.xmlrequest(true);
 	    if (xhr.overrideMimeType) {
@@ -11623,7 +11615,21 @@ WebIM.config = {
 	    var to = this._getGroupJid(options.roomId);
 	    var iq = $iq({ type: 'set', to: to });
 
-	    iq.c('query', { xmlns: 'http://jabber.org/protocol/muc#' + affiliation }).c('x', { type: 'submit', xmlns: 'jabber:x:data' }).c('field', { var: 'FORM_TYPE' }).c('value').t('http://jabber.org/protocol/muc#roomconfig').up().up().c('field', { var: 'muc#roomconfig_roomname' }).c('value').t(options.subject).up().up().c('field', { var: 'muc#roomconfig_roomdesc' }).c('value').t(options.description);
+	    iq
+	    	.c('query', { xmlns: 'http://jabber.org/protocol/muc#' + affiliation })
+	    	.c('x', { type: 'submit', xmlns: 'jabber:x:data' })
+	    	.c('field', { 'var': 'FORM_TYPE' })
+	    	.c('value')
+	    	.t('http://jabber.org/protocol/muc#roomconfig')
+	    	.up()
+	    	.up()
+	    	.c('field', { 'var': 'muc#roomconfig_roomname' })
+	    	.c('value').t(options.subject)
+	    	.up()
+	    	.up()
+	    	.c('field', { 'var': 'muc#roomconfig_roomdesc' })
+	    	.c('value')
+	    	.t(options.description);
 
 	    this.context.stropheConn.sendIQ(iq.tree(), function (msginfo) {
 	        sucFn();
@@ -17044,10 +17050,14 @@ WebIM.config = {
 	            onGotStream ? onGotStream(self, stream) : self.onGotStream(stream);
 	        }
 
-	        return navigator.mediaDevices.getUserMedia(constaints || self.mediaStreamConstaints).then(gotStream).then(self.onCreateMedia).catch(function (e) {
-	            _logger.debug('[WebRTC-API] getUserMedia() error: ', e);
-	            self.onError(e);
-	        });
+	        return navigator.mediaDevices.getUserMedia(constaints
+	        	|| self.mediaStreamConstaints)
+	        		.then(gotStream)
+	        		.then(self.onCreateMedia)
+	        		['catch'](function (e) {
+			            _logger.debug('[WebRTC-API] getUserMedia() error: ', e);
+			            self.onError(e);
+			        });
 	    },
 
 	    setLocalVideoSrcObject: function setLocalVideoSrcObject(stream) {
@@ -18131,14 +18141,23 @@ if (!String.prototype.trim) {
 				localStorage.clear();
 			} catch ( e ) {}
 		}
-		, set: function ( key, value ) {
+		, set: function (key, value, expiration) {
 			var date = new Date();
-			date.setTime(date.getTime() + 30*24*3600*1000);
+			// 过期时间默认为30天
+			var expiresTime = date.getTime() + (expiration || 30) * 24 * 3600 * 1000;
+			date.setTime(expiresTime);
 			document.cookie = encodeURIComponent(key) + '=' + encodeURIComponent(value) + ';path=/;expires=' + date.toGMTString();
 		}
-		, get: function ( key ) {
-			var results = document.cookie.match('(^|;) ?' + encodeURIComponent(key) + '=([^;]*)(;|$)'); 
-			return results ? decodeURIComponent(results[2]) : '';
+		, get: function (key) {
+			var matches = document.cookie.match('(^|;) ?' + encodeURIComponent(key) + '=([^;]*)(;|$)');
+			var results;
+			if(matches){
+				results = decodeURIComponent(matches[2]);
+			}
+			else {
+				results = '';
+			}
+			return results;
 		}
 		, getAvatarsFullPath: function ( url, domain ) {
 			var returnValue = null;
@@ -18794,6 +18813,17 @@ easemobIM.Transfer = easemobim.Transfer = (function () {
 					msg: msg,
 					type: 'DELETE',
 					excludeData: true
+				}));
+				break;
+			case 'mediaStreamUpdateStatus':
+				// patch
+				var streamId = msg.data.streamId;
+				delete msg.data.streamId;
+
+				easemobim.emajax(createObject({
+					url: '/v1/rtcmedia/media_streams/' + streamId,
+					msg: msg,
+					type: 'PUT',
 				}));
 				break;
 			default:
@@ -19961,13 +19991,16 @@ easemobim.channel = function ( config ) {
 			else if ( msg.ext && msg.ext.weichat && msg.ext.weichat.ctrlType === 'TransferToKfHint' ) {
 				type = 'robotTransfer';  
 			}
+			// 直播消息
+			else if ( msg.ext && msg.ext.type && msg.ext.type === 'live/video' ) {
+				type = 'liveStreaming/video';  
+			}
 			else {}
 
 			switch ( type ) {
 				case 'txt':
 				case 'face':
 					message = new Easemob.im.EmMessage('txt');
-
 					message.set({value: isHistory ? msg.data : me.getSafeTextValue(msg)});
 					break;
 				case 'img':
@@ -20058,6 +20091,11 @@ easemobim.channel = function ( config ) {
 					].join('');
 
 					message.set({value: title, list: str});
+					break;
+				case 'liveStreaming/video':
+					message = new Easemob.im.EmMessage('txt');
+					message.set({value: isHistory ? msg.data : me.getSafeTextValue(msg)});
+					!isHistory && easemobim.liveStreaming.open(msg.ext.msgtype.streamId);
 					break;
 				default:
 					break;
@@ -20373,7 +20411,7 @@ easemobim.channel = function ( config ) {
 
 // 视频邀请确认对话框
 easemobim.ui = {};
-easemobim.ui.videoConfirmDialog = (function(){
+easemobim.ui.videoConfirmDialog = easemobim.utils.isSupportWebRTC && (function(){
 	var dialog = document.querySelector('div.em-dialog-video-confirm');
 	var buttonPanel = dialog.querySelector('div.button-panel');
 	var btnConfirm = dialog.querySelector('.btn-confirm');
@@ -20640,6 +20678,240 @@ easemobim.videoChat = (function(dialog){
 	}
 }(easemobim.ui.videoConfirmDialog));
 
+easemobim.liveStreaming = (function(){
+	var utils = easemobim.utils;
+	var imChat = document.getElementById('em-kefu-webim-chat');
+	var btnVideoInvite = document.querySelector('.em-live-streaming-invite');
+	var bar = document.querySelector('.em-live-streaming-bar');
+	var videoWrapper = document.querySelector('.em-live-streaming-wrapper');
+	var btnExit = videoWrapper.querySelector('.btn-exit');
+	var video = videoWrapper.querySelector('video');
+	var timeSpan = videoWrapper.querySelector('.status-panel .time');
+
+	var sourceURL = 'http://vlive3.hls.cdn.ucloud.com.cn/ucloud/cyy-111/playlist.m3u8';
+	var config = null;
+	var sendMessageAPI = null;
+
+	var closingTimer = {
+		delay: 3000,
+		start: function(){
+			var me = this;
+			setTimeout(function(){
+				imChat.classList.remove('has-live-streaming');
+				videoWrapper.classList.add('hide');
+			}, me.delay);
+		}
+	}
+
+	var statusPoller = {
+		timer: null,
+		interval: 3000,
+		streamId: '',
+		status: 'IDLE',
+		start: function(streamId){
+			var me = this;
+			setTimeout(this.fn, 0);
+			this.timer = setInterval(fn, this.interval);
+			function fn(){
+				updateStatus(me.status, streamId);
+			}
+		},
+		stop: function(){
+			this.timer && clearInterval(this.timer);
+			this.timer = null;
+			this.updateStatus('IDLE');
+		},
+		updateStatus: function(status){
+			this.status = status;
+		}
+	};
+
+	var autoReload = {
+		timer: null,
+		interval: 500,
+		timeout: 5000,
+		timeStamp: Infinity,
+		start: function(){
+			var me = this;
+			this.updateTimeStamp();
+			this.timer = this.timer || setInterval(function(){
+				console.log('check progress');
+				var diff = (new Date()).getTime() - me.timeStamp;
+				if (diff > me.timeout && !video.paused){
+					console.log('reload video');
+					me.updateTimeStamp();
+					video.src = sourceURL;
+					video.play();
+				}
+			}, this.interval);
+		},
+		stop: function(){
+			this.timer && clearInterval(this.timer);
+		},
+		updateTimeStamp: function(){
+			this.timeStamp = (new Date().getTime());
+		}
+	}
+
+	function autoResize(width, height){
+		var LIMIT = {
+			width: 280,
+			height: 300
+		};
+
+		var targetAspectRadio = width / height;
+		var currentAspectRadio = LIMIT.width / LIMIT.height;
+
+		if (currentAspectRadio > targetAspectRadio){
+			videoWrapper.style.width = Math.floor(LIMIT.height * targetAspectRadio) + 'px';
+		}
+		else {
+			videoWrapper.style.height = Math.floor(LIMIT.width / targetAspectRadio) + 'px';
+		}
+
+	}
+
+	function bindEvent(){
+		btnVideoInvite.addEventListener('click', function(){
+			sendMessageAPI('txt', '邀请您进行实时视频', false, null);
+		}, false);
+		btnExit.addEventListener('click', function(evt){
+			statusPoller.updateStatus('IDLE');
+			video.pause();
+			videoWrapper.classList.add('hide');
+		}, false);
+		bar.addEventListener('click', function(e){
+			video.src = sourceURL;
+			statusPoller.updateStatus('PLAYING');
+			// autoReload.start();
+			video.play();			
+			videoWrapper.classList.remove('hide');
+		}, false);
+		video.addEventListener('loadeddata', function(e){
+			console.log(e.type);
+			console.log('size', video.videoWidth, video.videoHeight);
+			autoResize(video.videoWidth, video.videoHeight);
+		}, false);
+		video.addEventListener('timeupdate', function(e){
+			var cached = format(video.currentTime);
+			if(timeSpan.innerHTML !== cached){
+				timeSpan.innerHTML = format(video.currentTime);
+			}
+			function format(second){
+				return (new Date(second * 1000))
+					.toISOString()
+					.slice(-'00:00.000Z'.length)
+					.slice(0, '00:00'.length);
+			}
+		}, false);
+		// video.addEventListener('progress', function(e){
+		// 	autoReload.updateTimeStamp();
+		// }, false);
+	}
+
+	function initDebug(){
+		[
+			'loadedmetadata',
+			'loadstart',
+			'stalled',
+			'canplaythrough',
+			'suspend',
+			'pause',
+			'playing',
+			'error',
+			'waiting',
+			'progress',
+			'webkitbeginfullscreen',
+			'webkitendfullscreen'
+		].forEach(function(eventName){
+			video.addEventListener(eventName, function(e){
+				console.log(e.type, e);
+			});
+		});
+	}
+
+	function updateStatus(status, streamId){
+		easemobim.api('mediaStreamUpdateStatus', {
+			visitorUpdateStatusRequest: {
+				status: status
+			},
+			streamId: streamId
+		}, function(res){
+			var status = res.data
+				&& res.data.visitorUpdateStatusResponse
+				&& res.data.visitorUpdateStatusResponse.status;
+			var streamUri = res.data.visitorUpdateStatusResponse.streamUri;
+
+			switch(status){
+				// 坐席端开始推流
+				case 'STARTED':
+					readyToPlay(streamUri);
+					break;
+				// 坐席端停止推流
+				case 'STOPPED':
+				// 坐席端推流异常
+				case 'ABNORMAL':
+					bar.classList.remove('playing');
+					videoWrapper.classList.remove('playing');
+					timeSpan.innerHTML = '00:00';
+					statusPoller.stop();
+					// autoReload.stop();
+					video.pause();
+					video.src = '';
+					closingTimer.start();
+					utils.set('streamId', '');
+					break;
+				// 坐席端初始化，未开始推流，忽略此状态
+				case 'INIT':
+				default:
+					break;
+			}
+		});
+	}
+
+	function readyToPlay(streamUri){
+		sourceURL = streamUri;
+		bar.classList.add('playing');
+		videoWrapper.classList.add('playing');
+		imChat.classList.add('has-live-streaming');
+	}
+
+	return {
+		init: function(chat, sendMessage, cfg){
+			sendMessageAPI = sendMessage;
+			config = cfg;
+
+			// 按钮初始化
+			btnVideoInvite.classList.remove('hide');
+			bindEvent();
+			initDebug();
+
+			var streamId = utils.get('streamId');
+			if (streamId){
+				statusPoller.start(streamId);
+			}
+		},
+		open: function(streamId) {
+			statusPoller.start(streamId);
+			utils.set('streamId', streamId, 1);
+		},
+		onOffline: function() {
+			// for debug
+			console.log('onOffline');
+		}
+	}
+}());
+
+// 约定的文本消息，用以访客端获取streamId
+// {
+// 	ext: {
+// 		type: 'live/video',
+// 		msgtype: {
+// 			streamId: '9c8b5869-795e-4351-8f1a-7dbb620f108c'
+// 		}
+// 	}
+// }
+
 /**
  * webim交互相关
  */
@@ -20778,6 +21050,8 @@ easemobim.videoChat = (function(dialog){
 				this.getSession();
 				//set tenant logo
 				this.setLogo();
+				// init live streaming
+				utils.isMobile && easemobim.liveStreaming.init(this, this.channel.send, config);
 				//mobile set textarea can growing with inputing
 				utils.isMobile && this.initAutoGrow();
 				this.chatWrapper.getAttribute('data-getted') || config.newuser || this.getHistory();
@@ -21003,24 +21277,7 @@ easemobim.videoChat = (function(dialog){
 				});
 			}
 			, handleGroup: function () {
-				this.chatWrapper = this.handleChatContainer();
-			}
-			, handleChatContainer: function () {
-				var curChatContainer = utils.$Class('div.em-widget-chat', easemobim.imChatBody);
-
-				if ( curChatContainer && curChatContainer.length > 0 ) {
-					return curChatContainer[0];
-				} else {
-					curChatContainer = document.createElement('div');
-					utils.addClass(curChatContainer, 'em-widget-chat');
-					utils.insertBefore(easemobim.imChatBody, curChatContainer, easemobim.imChatBody.childNodes[this.hasLogo ? 1 : 0]);
-
-					var transfer = document.createElement('div');
-					transfer.id = 'transfer';
-					utils.addClass(transfer, 'em-widget-status-prompt');
-					easemobim.imChat.appendChild(transfer);
-					return curChatContainer;
-				}
+				this.chatWrapper = easemobim.imChatBody.querySelector('.em-widget-chat');
 			}
 			, getMsgid: function ( msg ) {
 				if ( msg ) {
@@ -21066,9 +21323,10 @@ easemobim.videoChat = (function(dialog){
 				});
 			}
 			, setLogo: function () {
-				if ( !utils.$Class('div.em-widget-tenant-logo').length && config.logo ) {
-					utils.html(this.chatWrapper, '<div class="em-widget-tenant-logo"><img src="' + config.logo + '"></div>' + utils.html(this.chatWrapper));
-					this.hasLogo = true;
+				// 为了保证消息插入位置正确
+				if (config.logo) {
+					this.chatWrapper.querySelector('.em-widget-tenant-logo').style.display = 'block';
+					this.chatWrapper.querySelector('.em-widget-tenant-logo img').src = config.logo;
 				}
 			}
 			, setNotice: function () {
@@ -21248,7 +21506,7 @@ easemobim.videoChat = (function(dialog){
 						chatWrapper.appendChild(dom); 
 					}
 				} else {
-					utils.insertBefore(chatWrapper, dom, chatWrapper.getElementsByTagName('div')[this.hasLogo ? 1 : 0]);
+					utils.insertBefore(chatWrapper, dom, chatWrapper.getElementsByTagName('div')[0]);
 				}
 			}
 			, resetSpan: function ( id ) {
@@ -21653,7 +21911,7 @@ easemobim.videoChat = (function(dialog){
 				utils.html(div, msg.get(!isSelf));
 
 				if ( isHistory ) {
-					utils.insertBefore(curWrapper, div, curWrapper.childNodes[me.hasLogo ? 1 : 0]);
+					utils.insertBefore(curWrapper, div, curWrapper.childNodes[0]);
 				} else {
 					curWrapper.appendChild(div);
 					me.scrollBottom(utils.isMobile ? 800 : null);
@@ -22008,7 +22266,7 @@ easemobim.videoChat = (function(dialog){
 	function initUI(config, callback) {
 		var iframe = document.getElementById('EasemobKefuWebimIframe');
 
-		iframe.src = config.domain + '/webim/transfer.html?v=benz.43.11.2';
+		iframe.src = config.domain + '/webim/transfer.html?v=benz.43.11.3';
 		utils.on(iframe, 'load', function() {
 			easemobim.getData = new easemobim.Transfer('EasemobKefuWebimIframe', 'data');
 			callback(config);

@@ -362,14 +362,23 @@
 				localStorage.clear();
 			} catch ( e ) {}
 		}
-		, set: function ( key, value ) {
+		, set: function (key, value, expiration) {
 			var date = new Date();
-			date.setTime(date.getTime() + 30*24*3600*1000);
+			// 过期时间默认为30天
+			var expiresTime = date.getTime() + (expiration || 30) * 24 * 3600 * 1000;
+			date.setTime(expiresTime);
 			document.cookie = encodeURIComponent(key) + '=' + encodeURIComponent(value) + ';path=/;expires=' + date.toGMTString();
 		}
-		, get: function ( key ) {
-			var results = document.cookie.match('(^|;) ?' + encodeURIComponent(key) + '=([^;]*)(;|$)'); 
-			return results ? decodeURIComponent(results[2]) : '';
+		, get: function (key) {
+			var matches = document.cookie.match('(^|;) ?' + encodeURIComponent(key) + '=([^;]*)(;|$)');
+			var results;
+			if(matches){
+				results = decodeURIComponent(matches[2]);
+			}
+			else {
+				results = '';
+			}
+			return results;
 		}
 		, getAvatarsFullPath: function ( url, domain ) {
 			var returnValue = null;
@@ -1185,7 +1194,7 @@ easemobim.titleSlide = function () {
 	'use strict';
 	var utils = easemobim.utils;
 	easemobim.config = easemobim.config || {};
-	easemobim.version = 'benz.43.11.2';
+	easemobim.version = 'benz.43.11.3';
 	easemobim.tenants = {};
 
 	var DEFAULT_CONFIG = {
