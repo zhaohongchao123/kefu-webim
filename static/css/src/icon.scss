@@ -35,7 +35,8 @@
 .icon-note:before { content: "\41"; }
 .icon-video:before { content: "\4f"; }
 .icon-flower:before { content: "\46"; }
-.icon-file:before { content: "\48"}
+.icon-file:before { content: "\48"; }
+.icon-exit:before { content: "\64"; }
 
 .icon-camera:before,
 .icon-change:before,
@@ -66,6 +67,7 @@
 .icon-video:before,
 .icon-flower:before,
 .icon-file:before,
+.icon-exit:before,
 
 .em-widget-agent-status.leave:after,
 .em-widget-agent-status.busy:after,

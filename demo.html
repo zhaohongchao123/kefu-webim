@@ -12,28 +12,13 @@
 		button:active, a:active { background: #fff;color: #00CEB9; }
 		input { height: 40px;outline: none;width: 300px;text-align: center;font-size: 16px;color: #00CEB9; float: left;border: 1px solid #fff; }
 	</style>
-<!-- 	<script type='text/javascript'>
-      var _vds = _vds || [];
-      window._vds = _vds;
-      (function(){
-        _vds.push(['setAccountId', 'bd6dcb8f7199c499']);
-        (function() {
-          var vds = document.createElement('script');
-          vds.type='text/javascript';
-          vds.async = true;
-          vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
-          var s = document.getElementsByTagName('script')[0];
-          s.parentNode.insertBefore(vds, s);
-        })();
-      })();
-  </script>
- --></head>
+</head>
 
 <body>
 
 	<h1>Demo</h1>
 	<a target='_blank' href='http://docs.easemob.com/cs/300visitoraccess/20webplugin'>集成文档</a>
-	<br><br><br><br><br><br><br>
+	<br>
 
 	<a href='javascript:;' onclick='easemobim.bind({
 		tenantId: 10954,
@@ -43,14 +28,12 @@
 		tenantId: 10954,
         emgroup: "技能组1"
 	})'>绑定技能组示例</a>
-
-
-
-	
-	<br><br><br><h1>测试</h1>
-	<div><input id='testvalue' type='text' placeholder='请输入您的tenantId，点击测试按钮'/></div>
-	<button id='test'>测试</button>
-	<button onclick="easemobim.bind()">测试 autoConnect</button>
+	<br><br><br>
+	<h1>测试</h1>
+	<div>
+		<input id='testvalue' type='text' placeholder='请输入您的tenantId，点击测试按钮'/>
+	</div>
+	<a id='test'>测试</a>
 	<br><br><br>
 	<script>
 		var v = document.getElementById('testvalue');
@@ -69,14 +52,119 @@
 	window.easemobim = window.easemobim || {};
 
 easemobim.config = {
+	// domain: '//172.17.3.86:8080',
 	domain: '//sandbox.kefu.easemob.com',
-	appKey: 'zhaoyan528#jiuzheyang',
-	to: 'qianqian',
-	//eventCollector: true,	// 访客自动上报
-	// tenantId: 11885,
-	// hide: true,
-	tenantId: 11678,
-	// autoConnect: true									//自动连接
+	// h5Origin: '//localhost:8080',
+	tenantId: '11885',
+	// eventCollector: true,
+	// offDutyType: 'chat',
+	satisfaction: true,
+	// emgroup: 'shouqian',
+	// hide: false,
+
+	// benz dev
+	// tenantId: 18,
+	// appKey: 'bcssy#chat',
+	// domain: '//estore-int-bce.mercedes-benz.com.cn',
+	// h5Origin: '//estore-int-bce.mercedes-benz.com.cn',
+	// xmppServer: 'estore-int-bce.mercedes-benz.com.cn',
+	// restServer: 'estore-int-bce.mercedes-benz.com.cn',
+	// path: '//estore-int-bce.mercedes-benz.com.cn/webim',
+
+// test 
+	// 访客自动上报
+	// eventCollector: true,
+	// emgroup: '售前组',
+	//自动连接
+	// autoConnect: true
+	// extMsg: [
+	// 	{								   
+	// 		"imageName": "mallImage3.png",
+	// 		"type": "custom",					   
+	// 		"msgtype": {
+	// 			"order": {
+	// 				"img_url": "h.png",
+	// 				"title": "mmm",
+	// 				"desc": "mmm端午节粽子四",
+	// 				"order_title":"mmm订单号：123456789012345678901234567890",
+	// 				"price": "",
+	// 				"item_url": "http://www.baidu.com?s=order_sn/123123"
+	// 			}
+	// 		}
+	// 	},
+	// 	{
+	// 		"weichat": {
+	// 			"ctrlType": "inviteEnquiry"
+	// 		},
+	// 		"cmd": {
+	// 			"updateVisitorInfoSrc": {
+	// 				"params": {
+	// 					"userid": "123456",
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// ],
+	// extMsg: {								   
+	// 	"imageName": "mallImage3.png",
+	// 	"type": "custom",					   
+	// 	"msgtype": {
+	// 		"order": {
+	// 			"img_url": "h.png",
+	// 			"title": "mmm",
+	// 			"desc": "mmm端午节粽子四",
+	// 			"order_title":"mmm订单号：123456789012345678901234567890",
+	// 			"price": "",
+	// 			"item_url": "http://www.baidu.com?s=order_sn/123123"
+	// 		}
+	// 	}
+	// },
+   // pc 端设置
+ //	onready: function () {				  
+ //			easemobim.sendExt({
+ //				ext:{
+	// 				"weichat": {
+	// 					"ctrlType": "inviteEnquiry"
+	// 				},
+	// 				"cmd": {
+	// 					"updateVisitorInfoSrc": {
+	// 						"params": {
+	// 							"userid": "123456",
+	// 						}
+	// 					}
+	// 				}
+ //				}
+ //			});
+	// },
+	// pc 端设置
+ //	onready: function () {				  
+ //			easemobim.sendExt({
+ //				ext:{
+ //					"imageName": "mallImage3.png",
+ //					//custom代表自定义消息，无需修改
+ //					"type": "custom",		   
+ //					"msgtype": {
+ //						"order": {
+ //							"img_url": "h\n.pn",
+ //							"title": "测试track1",
+ //							"desc": "端午节粽子四",
+ //							"order_title":"订单号：123456789012345678901234567890",
+ //							"price": "",
+ //							"item_url": "http://www.baidu.com?s=order_sn/123123"
+ //						}
+ //					}
+ //				}
+ //			});
+	// },
+	// visitor: {		 
+ // 		trueName: '黎小冷',
+ // 		qq: '567**34',
+ // 		phone: '188****8888',
+ // 		companyName: '环信',
+ // 		userNickname: '我是黎小冷',
+ // 		description: '描述信息',
+ // 		email: '123456@**.com'
+ // 	},
 	unused: ''
 };
 </script>

@@ -113,6 +113,7 @@ gulp.task('combineJs', function() {
 		'static/js/src/modules/channel.js',
 		'static/js/src/modules/ui.js',
 		'static/js/src/modules/videoChat.js',
+		'static/js/src/modules/liveStreaming.js',
 		'static/js/src/modules/chat.js',
 		'static/js/src/modules/eventCollector.js',
 		'static/js/src/init.js'

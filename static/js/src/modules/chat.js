@@ -136,6 +136,8 @@
 				this.getSession();
 				//set tenant logo
 				this.setLogo();
+				// init live streaming
+				utils.isMobile && easemobim.liveStreaming.init(this, this.channel.send, config);
 				//mobile set textarea can growing with inputing
 				utils.isMobile && this.initAutoGrow();
 				this.chatWrapper.getAttribute('data-getted') || config.newuser || this.getHistory();
@@ -361,24 +363,7 @@
 				});
 			}
 			, handleGroup: function () {
-				this.chatWrapper = this.handleChatContainer();
-			}
-			, handleChatContainer: function () {
-				var curChatContainer = utils.$Class('div.em-widget-chat', easemobim.imChatBody);
-
-				if ( curChatContainer && curChatContainer.length > 0 ) {
-					return curChatContainer[0];
-				} else {
-					curChatContainer = document.createElement('div');
-					utils.addClass(curChatContainer, 'em-widget-chat');
-					utils.insertBefore(easemobim.imChatBody, curChatContainer, easemobim.imChatBody.childNodes[this.hasLogo ? 1 : 0]);
-
-					var transfer = document.createElement('div');
-					transfer.id = 'transfer';
-					utils.addClass(transfer, 'em-widget-status-prompt');
-					easemobim.imChat.appendChild(transfer);
-					return curChatContainer;
-				}
+				this.chatWrapper = easemobim.imChatBody.querySelector('.em-widget-chat');
 			}
 			, getMsgid: function ( msg ) {
 				if ( msg ) {
@@ -424,9 +409,10 @@
 				});
 			}
 			, setLogo: function () {
-				if ( !utils.$Class('div.em-widget-tenant-logo').length && config.logo ) {
-					utils.html(this.chatWrapper, '<div class="em-widget-tenant-logo"><img src="' + config.logo + '"></div>' + utils.html(this.chatWrapper));
-					this.hasLogo = true;
+				// 为了保证消息插入位置正确
+				if (config.logo) {
+					this.chatWrapper.querySelector('.em-widget-tenant-logo').style.display = 'block';
+					this.chatWrapper.querySelector('.em-widget-tenant-logo img').src = config.logo;
 				}
 			}
 			, setNotice: function () {
@@ -606,7 +592,7 @@
 						chatWrapper.appendChild(dom); 
 					}
 				} else {
-					utils.insertBefore(chatWrapper, dom, chatWrapper.getElementsByTagName('div')[this.hasLogo ? 1 : 0]);
+					utils.insertBefore(chatWrapper, dom, chatWrapper.getElementsByTagName('div')[0]);
 				}
 			}
 			, resetSpan: function ( id ) {
@@ -1011,7 +997,7 @@
 				utils.html(div, msg.get(!isSelf));
 
 				if ( isHistory ) {
-					utils.insertBefore(curWrapper, div, curWrapper.childNodes[me.hasLogo ? 1 : 0]);
+					utils.insertBefore(curWrapper, div, curWrapper.childNodes[0]);
 				} else {
 					curWrapper.appendChild(div);
 					me.scrollBottom(utils.isMobile ? 800 : null);

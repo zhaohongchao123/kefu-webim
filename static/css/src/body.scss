@@ -135,6 +135,99 @@
 	}
 }
 
+// 直播控件
+.em-live-streaming-wrapper {
+	position: fixed;
+	background-color: black;
+	z-index: 3;
+	top: 60px;
+	right: 20px;
+	width: 200px;
+	height: 300px;
+	video {
+		width: 100%;
+		height: 100%;
+	}
+	.ctrl-panel {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		.btn-exit {
+			color: white;
+			&:before {
+				font-size: 20px;
+			}
+		}
+	}
+	.status-panel {
+		position: absolute;
+		left: 10px;
+		top: 10px;
+		color: white;
+		.playing {
+			display: none;
+		}
+		.symbol {
+			color: red;
+			&:before {
+				font-size: 14px;
+			}
+		}
+	}
+	&.playing {
+		.status-panel {
+			.playing {
+				display: inline-block;
+			}
+			.stopped {
+				display: none;
+			}
+			.symbol {
+				color: green;
+			}
+		}
+	}
+}
+
+.em-live-streaming-bar {
+	cursor: pointer;
+	display: none;
+	z-index: 2;
+	position: absolute;
+	top: 43px;
+	width: 100%;
+	height: 24px;
+	color: white;
+	background-color: red;
+	line-height: 24px;
+	.content {
+		width: 87%;
+		vertical-align: middle;
+		line-height: 24px;
+		margin-left: 10px;
+	}
+	.playing {
+		display: none;
+	}
+	&.playing {
+		background-color: green;
+		.stopped {
+			display: none;
+		}
+		.playing {
+			display: inline-block;
+		}
+	}
+	// .close {
+	// 	position: absolute;
+	// 	right: 10px;
+	// 	height: 24px;
+	// 	color: white;
+	// 	display: inline-block;
+	// 	border-radius: 50%;
+	// 	background-color: rgba(255,255,255,.3);
+	// }
+}
 
 /* 信息栏 */
 .em-widget-tip {
@@ -191,6 +284,18 @@
 	}
 }
 
+// 直播状态条
+.em-widget-wrapper.has-live-streaming {
+	.em-widget-tip {
+		margin-top: 24px;
+	}
+	.em-widgetBody-wrapper {
+		margin-top: 24px;
+	}
+	.em-live-streaming-bar {
+		display: block;
+	}
+}
 .em-widget-tenant-logo {
 	max-width: 370px;
 	height: 70px;

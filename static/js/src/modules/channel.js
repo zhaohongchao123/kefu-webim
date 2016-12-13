@@ -327,13 +327,16 @@ easemobim.channel = function ( config ) {
 			else if ( msg.ext && msg.ext.weichat && msg.ext.weichat.ctrlType === 'TransferToKfHint' ) {
 				type = 'robotTransfer';  
 			}
+			// 直播消息
+			else if ( msg.ext && msg.ext.type && msg.ext.type === 'live/video' ) {
+				type = 'liveStreaming/video';  
+			}
 			else {}
 
 			switch ( type ) {
 				case 'txt':
 				case 'face':
 					message = new Easemob.im.EmMessage('txt');
-
 					message.set({value: isHistory ? msg.data : me.getSafeTextValue(msg)});
 					break;
 				case 'img':
@@ -424,6 +427,11 @@ easemobim.channel = function ( config ) {
 					].join('');
 
 					message.set({value: title, list: str});
+					break;
+				case 'liveStreaming/video':
+					message = new Easemob.im.EmMessage('txt');
+					message.set({value: isHistory ? msg.data : me.getSafeTextValue(msg)});
+					!isHistory && easemobim.liveStreaming.open(msg.ext.msgtype.streamId);
 					break;
 				default:
 					break;
