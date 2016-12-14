@@ -9296,6 +9296,14 @@ WebIM.config = {
 
 	window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 
+	if (window.XDomainRequest) {
+	    XDomainRequest.prototype.oldsend = XDomainRequest.prototype.send;
+	    XDomainRequest.prototype.send = function () {
+	        XDomainRequest.prototype.oldsend.apply(this, arguments);
+	        this.readyState = 2;
+	    };
+	}
+
 	Strophe.Request.prototype._newXHR = function () {
 	    var xhr = _utils.xmlrequest(true);
 	    if (xhr.overrideMimeType) {
@@ -12539,14 +12547,15 @@ WebIM.config = {
 				return false;
 			}
 		};
-
-		if ( window.XDomainRequest ) {
-			XDomainRequest.prototype.oldsend = XDomainRequest.prototype.send;
-			XDomainRequest.prototype.send = function () {
-				XDomainRequest.prototype.oldsend.apply(this, arguments);
-				this.readyState = 2;
-			};
-		}
+// todo 尽早去除旧的sdk
+// 此处代码与新sdk共存时在IE8 会堆栈溢出
+		// if ( window.XDomainRequest ) {
+		// 	XDomainRequest.prototype.oldsend = XDomainRequest.prototype.send;
+		// 	XDomainRequest.prototype.send = function () {
+		// 		XDomainRequest.prototype.oldsend.apply(this, arguments);
+		// 		this.readyState = 2;
+		// 	};
+		// }
 
 		Strophe.Request.prototype._newXHR = function () {
 			var xhr =  Utils.xmlrequest(true);
@@ -20751,6 +20760,28 @@ easemobim.liveStreaming = (function(){
 		updateTimeStamp: function(){
 			this.timeStamp = (new Date().getTime());
 		}
+	};
+
+	// fake 解决某些型号手机的时间自动清零问题
+	var timeAccumulator = {
+		lastCurrentTime: 0,
+		accumulatedTime: 0,
+		update: function(){
+			var delta = video.currentTime - this.lastCurrentTime;
+			if (delta >= 0){
+				this.accumulatedTime += delta;
+			}
+			else {
+				// 初始时间不要累加，否则导致时间会超前于推流端
+				// this.accumulatedTime += video.currentTime;
+			}
+			this.lastCurrentTime = video.currentTime;
+			return this.accumulatedTime;
+		},
+		init: function(){
+			this.lastCurrentTime = 0;
+			this.accumulatedTime = 0;
+		}
 	}
 
 	function autoResize(width, height){
@@ -20793,9 +20824,10 @@ easemobim.liveStreaming = (function(){
 			autoResize(video.videoWidth, video.videoHeight);
 		}, false);
 		video.addEventListener('timeupdate', function(e){
-			var cached = format(video.currentTime);
+			var cached = format(timeAccumulator.update());
+			// var cached = format(video.currentTime);
 			if(timeSpan.innerHTML !== cached){
-				timeSpan.innerHTML = format(video.currentTime);
+				timeSpan.innerHTML = cached;
 			}
 			function format(second){
 				return (new Date(second * 1000))
@@ -20893,6 +20925,7 @@ easemobim.liveStreaming = (function(){
 		},
 		open: function(streamId) {
 			statusPoller.start(streamId);
+			timeAccumulator.init();
 			utils.set('streamId', streamId, 1);
 		},
 		onOffline: function() {
