@@ -21563,7 +21563,9 @@ easemobim.liveStreaming = (function(){
 				me.conn.open(op);
 
 				// init webRTC
-				if(utils.isSupportWebRTC){
+				// 暂时屏蔽 webrtc 功能
+				if(false){
+				// if(utils.isSupportWebRTC){
 					easemobim.videoChat.init(me.conn, me.channel.send, config);
 				}
 			}
@@ -21849,7 +21851,7 @@ easemobim.liveStreaming = (function(){
 					if ( utils.isMobile ) {
 						easemobim.textarea.style.height = '34px';
 						easemobim.textarea.style.overflowY = 'hidden';
-						me.direction === 'up' || (easemobim.imChatBody.style.bottom = '43px');
+						me.direction === 'up' || (easemobim.imChatBody.style.bottom = '77px');
 						easemobim.textarea.focus();
 					}
 					return false;
@@ -22299,7 +22301,7 @@ easemobim.liveStreaming = (function(){
 	function initUI(config, callback) {
 		var iframe = document.getElementById('EasemobKefuWebimIframe');
 
-		iframe.src = config.domain + '/webim/transfer.html?v=benz.43.11.3';
+		iframe.src = config.domain + '/webim/transfer.html?v=benz.43.11.004';
 		utils.on(iframe, 'load', function() {
 			easemobim.getData = new easemobim.Transfer('EasemobKefuWebimIframe', 'data');
 			callback(config);
