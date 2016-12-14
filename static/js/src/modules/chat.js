@@ -616,7 +616,9 @@
 				me.conn.open(op);
 
 				// init webRTC
-				if(utils.isSupportWebRTC){
+				// 暂时屏蔽 webrtc 功能
+				if(false){
+				// if(utils.isSupportWebRTC){
 					easemobim.videoChat.init(me.conn, me.channel.send, config);
 				}
 			}
