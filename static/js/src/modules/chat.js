@@ -947,7 +947,6 @@
 					if(evt.keyCode !== 13) return;
 
 					if(utils.isMobile || evt.ctrlKey || evt.shiftKey){
-						this.value += '\n';
 						return false;
 					}
 					else{
